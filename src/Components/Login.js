@@ -37,12 +37,12 @@ function LoginPage() {
   useEffect(() => {
     setIsLoginFormValid(!loginEmailError && loginEmail);
   }, [loginEmailError, loginEmail]);
-  
 
   useEffect(() => {
-    setIsLoginFormValid(!loginEmailError && !loginPasswordError && loginEmail && loginPassword);
+    setIsLoginFormValid(
+      !loginEmailError && !loginPasswordError && loginEmail && loginPassword
+    );
   }, [loginEmailError, loginPasswordError, loginEmail, loginPassword]);
-
 
   function validateEmail(email) {
     const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{1,5}$/i;
@@ -54,17 +54,17 @@ function LoginPage() {
     if (!validateEmail(value)) {
       setLoginEmailError("Invalid email format");
     } else {
-      setLoginEmailError(""); 
+      setLoginEmailError("");
     }
-  }
+  };
 
   const handleLoginPasswordChange = (value) => {
     setLoginPassword(value);
     if (!value) {
-      setLoginPasswordError('Invalid password format');
+      setLoginPasswordError("Invalid password format");
     } else {
       setLoginPassword(value);
-      setLoginPasswordError('');
+      setLoginPasswordError("");
     }
   };
 
@@ -111,11 +111,11 @@ function LoginPage() {
       console.error("Please fill in all required fields.");
       setIsLoginFormValid(false);
       return;
-    } 
+    }
 
     const data = {
-      username: email,
-      password: password,
+      username: loginEmail,
+      password: loginPassword,
     };
 
     fetch("http://127.0.0.1:5000/auth/login", {
@@ -155,10 +155,13 @@ function LoginPage() {
     }
 
     if (isFormValid) {
-      const data = {
-        username: email,
-        password: password,
-      };
+        const data = {
+            username: email,
+            password: password,
+            firstName: firstName, 
+            lastName: lastName,   
+            dob: dob              
+          };
 
       fetch("http://127.0.0.1:5000/auth/register", {
         method: "POST",
@@ -212,7 +215,7 @@ function LoginPage() {
               </div>
               <div className="form-group">
                 <label>Password:</label>
-                <input 
+                <input
                   type="password"
                   value={loginPassword}
                   onChange={(e) => handleLoginPasswordChange(e.target.value)}
