@@ -2,7 +2,7 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { BrowserRouter } from 'react-router-dom';
 
-import {  Header,  SignSignup,  SignUpForm,  LoginForm,  User, BaselineSurvey,  StartTest,} from "./Containers";
+import {  Header,  SignSignup,  SignUpForm,  LoginForm, Test, User, BaselineSurvey,  StartTest, Dashboard} from "./Containers";
 import { Navbar } from "./components";
 import "./App.css";
 import LoginPage from "./Containers/login/Login";
@@ -33,6 +33,8 @@ const App = () => {
         <Route path="/user" element={<User />} />
         <Route path="/baseline_survey" element={<BaselineSurvey />} />
         <Route path="/starttest" element={<StartTest/>} />
+        <Route path="/test" element={<Test/>} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </>
   );
