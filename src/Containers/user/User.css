@@ -1,0 +1,90 @@
+.sequio__user-content {
+    display: flex;
+    flex-direction: column;
+    margin-right: 10rem;
+    margin-left: 10rem;
+}
+
+.sequio__user-content button {
+    background-color: transparent;
+    border-radius: 15px;
+    border: 1px solid #F5F5F5;
+    width: 400px;
+    height: 68px;
+    font-family: var(--font-family);
+    font-weight: 300;
+    font-size: 18px;
+    line-height: normal;
+    text-align: center;
+    margin-top: 2rem;
+    align-self: center;
+}
+
+.sequio__user-content button p {
+    font-family: var(--font-family);
+    font-weight: 200;
+    font-size: 30px;
+    line-height: normal;
+    cursor: pointer;
+    border-radius: 5px;
+    color: #ffff;
+}
+
+.sequio__user-content h3 {
+    font-family: var(--font-family);
+    font-weight: 300;
+    font-size: 38px;
+    line-height: normal;
+    cursor: pointer;
+    border-radius: 5px;
+    color: #ffff;
+    align-self: center;
+    margin-top: 2rem;
+}
+
+@media screen and (max-width: 1050px) {
+    .sequio__user {
+        flex-direction: column;
+    }
+
+    .sequio__user-content {
+        margin: 0 0 3rem;
+    }
+}
+
+@media screen and (max-width: 650px) {
+    .sequio__user-content h3 {
+        font-size: 48px;
+        line-height: 60px;
+    }
+
+    .sequio__user-content p {
+        font-size: 16px;
+        line-height: 24px;
+    }
+}
+
+@media screen and (max-width: 490px) {
+    .sequio__user-content h3 {
+        font-size: 36px;
+        line-height: 48px;
+    }
+
+    .sequio__user-content p {
+        font-size: 14px;
+        line-height: 24px;
+    }
+}
+
+/* Hover state */
+button:hover {
+    background: rgba(255, 255, 255, 0.36);
+  transition: all 0.3s ease; /* Add a smooth transition effect */
+  border: 2px solid #3498db; /* Change border color on hover */
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);;
+}
+
+/* Active (clicked) state */
+button:active {
+    background: rgba(255, 255, 255, 0.36);
+}
