@@ -40,6 +40,10 @@ function LoginPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    localStorage.setItem("loggedIn", false);
+  }, []);
+
+  useEffect(() => {
     setIsLoginFormValid(!loginEmailError && loginEmail);
   }, [loginEmailError, loginEmail]);
 
@@ -73,43 +77,7 @@ function LoginPage() {
     }
   };
 
-  // const handlePasswordChange = (value) => {
-  //   if (!value) {
-  //     setPasswordError("");
-  //   } else {
-  //     if (
-  //       value.length < 8 ||
-  //       !/[!@#$%^&*()_+{}\[\]:;<>,.?~\\-]/.test(value) ||
-  //       !/[a-z]/.test(value) ||
-  //       !/[A-Z]/.test(value) ||
-  //       !/\d/.test(value)
-  //     ) {
-  //       setPasswordError(
-  //         "Password should be at least 8 characters long and include 1 uppercase, 1 lowercase, 1 number, and 1 special character."
-  //       );
-  //     } else {
-  //       setPasswordError("");
-  //     }
-  //   }
-  //   setPassword(value);
-  //   setIsFormValid(!passwordError && !confirmPasswordError);
-  // };
-
-  // const handleConfirmPasswordChange = (value) => {
-  //   if (!value) {
-  //     setConfirmPasswordError("");
-  //   } else {
-  //     if (value != password) {
-  //       setConfirmPasswordError("Confirm Password should be same as Password.");
-  //     } else {
-  //       setConfirmPasswordError("");
-  //     }
-  //   }
-  //   setConfirmPassword(value);
-  //   setIsFormValid(!passwordError && !confirmPasswordError);
-  // };
-
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
     if (!loginEmail || !loginPassword) {
@@ -123,16 +91,22 @@ function LoginPage() {
       password: loginPassword,
     };
 
-    fetch("http://127.0.0.1:5000/auth/login", {
+    await fetch("http://127.0.0.1:5000/auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
     })
-      .then((response) => {
+      .then(async (response) => {
+        let datajson;
+        datajson = await response.json();
+        console.log(datajson);
+
         if (response.ok) {
           localStorage.setItem("loggedIn", true);
+          localStorage.setItem("userFirstName", datajson.user_data.firstname);
+          localStorage.setItem("userID", datajson.user_data.userId);
           console.log("Login successful");
           navigate("/header");
         } else {
@@ -143,56 +117,6 @@ function LoginPage() {
         console.log("Error:", error);
       });
   };
-
-  // const handleRegister = (e) => {
-  //   e.preventDefault();
-
-  //   if (
-  //     !firstName ||
-  //     !lastName ||
-  //     !email ||
-  //     !dob ||
-  //     !password ||
-  //     !confirmPassword
-  //   ) {
-  //     console.error("Please fill in all required fields.");
-  //     setIsFormValid(false);
-  //     return;
-  //   }
-
-  //   if (isFormValid) {
-  //       const data = {
-  //           username: email,
-  //           password: password,
-  //           firstName: firstName,
-  //           lastName: lastName,
-  //           dob: dob
-  //         };
-
-  //     fetch("http://127.0.0.1:5000/auth/register", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify(data),
-  //     })
-  //       .then((response) => {
-  //         if (response.ok) {
-  //           console.log("Registration successful");
-  //         } else {
-  //           console.error("Registration failed");
-  //           setErrorMsg("Registration failed. Please try again.");
-  //         }
-  //       })
-  //       .catch((error) => {
-  //         console.error("Error:", error);
-  //         setErrorMsg("Network error. Please try again.");
-  //       });
-  //   } else {
-  //     console.error("Form is not valid. Cannot submit.");
-  //     setErrorMsg("Form is not valid. Please check your inputs.");
-  //   }
-  // };
 
   return (
     <>
@@ -227,95 +151,6 @@ function LoginPage() {
                 <p>Login</p>
               </button>
             </form>
-
-            {/* <form>
-                <div className="form-group">
-                  <input
-                    type="text"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                    required
-                    maxlength="50"
-                    placeholder="First Name"
-                  />
-                </div>
-
-                <div className="form-group">
-                  <input
-                    type="text"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                    required
-                    maxlength="50"
-                    placeholder="Last Name"
-                  />
-                </div>
-
-                <div className="">
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    placeholder="Email"
-                  />
-                </div>
-
-                <div className="sequio__label-DOB">
-                  <label>Date of Birth:</label>
-                  <input
-                    type="date"
-                    value={dob}
-                    onChange={(e) => setDob(e.target.value)}
-                    required
-                  />
-                </div>
-
-                <div className="">
-                  <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => handlePasswordChange(e.target.value)}
-                    required
-                    placeholder="Password"
-                  />
-                  {passwordError && (
-                    <div className="error-message">{passwordError}</div>
-                  )}
-                </div>
-
-                <div className="">
-                  <input
-                    type="password"
-                    value={confirmPassword}
-                    onChange={(e) => handleConfirmPasswordChange(e.target.value)}
-                    required
-                    placeholder="Confirm Password"
-                  />
-                  {confirmPasswordError && (
-                    <div className="error-message">{confirmPasswordError}</div>
-                  )}
-                </div>
-                {errorMsg && <div className="error-message">{errorMsg}</div>}
-
-                <button
-                  type="button"
-                  onClick={handleRegister}
-                  disabled={!isFormValid}
-                  className={isFormValid ? "" : "disabled-button"}
-                >
-                  <p>Register</p>
-                </button>
-              </form> */}
-
-            {/* <div className="sequio__landing section__padding" id="home">
-                <div className="sequio__landing-content">
-                    <img src={cat_white} alt="logo" />
-                    <h3 href="#home">SEQUIO</h3>
-                    <button type="button" className="sequio__signin-btn"><p>Log In</p></button>
-                    <button type="button" onClick={handleRegister} className="sequio__signup-btn"><p>Sign Up</p></button>
-                </div>
-              </div> */}
           </div>
         </div>
       </div>

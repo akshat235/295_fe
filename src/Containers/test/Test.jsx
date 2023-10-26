@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Test.css";
-// import jsonData from "./../../database/Data.json";
+import jsonData from "./../../database/questions.json";
 import { useNavigate } from "react-router-dom";
 
 function formatTime(seconds) {
@@ -14,6 +14,22 @@ function formatTime(seconds) {
   return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
 }
 
+const submissionJson = { VARC: [jsonData.map(item => ({
+    questionid: item.QuestionId,
+    correctans: item.Correct_answer,
+    optionSelected:""
+  }))
+  ] ,  QUANT: [jsonData.map(item => ({
+    questionid: item.QuestionId,
+    correctans: item.Correct_answer,
+    optionSelected:""
+  }))] , DILR: [jsonData.map(item => ({
+    questionid: item.QuestionId,
+    correctans: item.Correct_answer,
+    optionSelected:""
+  }))]
+  };
+
 function Test() {
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -23,43 +39,72 @@ function Test() {
   const [divCount, setDivCount] = useState(1);
   const [timer, setTimer] = useState(40 * 60);
   const [showModal, setShowModal] = useState(false);
-  const [jsonData, setJsonData] = useState([
-    {
-      questionId: 1,
-      questionBody: "Error Loading Json.question",
-      options: [" ", " ", " ", " "],
-      correctAnswer: " ",
-    },
-  ]);
+  //   const [jsonData, setJsonData] = useState([
+  //     {
+  //       questionId: 1,
+  //       questionBody: "Error Loading Json.question",
+  //       options: [" ", " ", " ", " "],
+  //       correctAnswer: " ",
+  //     },
+  //   ]);
   const [responesJsonData, setResponseJsonData] = useState("");
+  const [currentSectionTitle, setCurrentSectionTitle] = useState("VARC");
+  const VARCresponse = {
+    VARC: jsonData.map(item => ({
+      questionid: item.QuestionId,
+      correctans: item.Correct_answer,
+      optionSelected:""
+    }))
+  };
+//   console.log(VARCresponse);
+
+  //   useEffect(() => {
+  //     setResponseJsonData(
+  //       jsonData.map((question) => ({
+  //         ...question,
+  //         selectedOption: "",
+  //       }))
+  //     );
+  //   }, [jsonData]);
+  //   const [sectionSubmission, setSectionSubmission] = useState([
+  //     {
+  //       questionId: 0,
+  //       response: {
+  //         selectedOption: "",
+  //         correctAnswer: "",
+  //       },
+  //     },
+  //   ]);
+  const [sectionSubmission, setSectionSubmission] = useState({});
+
+  
 
   useEffect(() => {
-    setResponseJsonData(
-      jsonData.map((question) => ({
-        ...question,
-        selectedOption: "",
-      }))
-    );
-  }, [jsonData]);
-
-  useEffect(() => {
-    const apiUrl = "http://127.0.0.1:5000/test/questions";
-
-    fetch(apiUrl)
-      .then((response) => response.json())
-      .then((result) => {
-        setJsonData(result);
-        console.log(responesJsonData);
-
-        console.log("Questions Loaded!");
-        console.log("Number of questions in jsonData: ", jsonData.length);
-
-        // seupdatedJsonData = [...jsonData];
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
+    const loggedIn = localStorage.getItem("loggedIn");
+    if (loggedIn == "false") {
+      navigate("/login");
+      return;
+    }
   }, []);
+
+  //   useEffect(() => {
+  //     const apiUrl = "http://127.0.0.1:5000/test/questions";
+
+  //     fetch(apiUrl)
+  //       .then((response) => response.json())
+  //       .then((result) => {
+  //         setJsonData(result);
+  //         console.log(responesJsonData);
+
+  //         console.log("Questions Loaded!");
+  //         console.log("Number of questions in jsonData: ", jsonData.length);
+
+  //         // seupdatedJsonData = [...jsonData];
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error fetching data:", error);
+  //       });
+  //   }, []);
 
   useEffect(() => {
     const countdown = setTimeout(() => {
@@ -112,17 +157,12 @@ function Test() {
   };
 
   const handleSubmitRespose = () => {
-    const submitUrl = "http://127.0.0.1:5000/test/submitresponseXXXX";
-
+    const submitUrl = "http://127.0.0.1:5000/test/submitresponse";
+    const uid = localStorage.getItem("userID");
     const final_response = {
-        "userId": "1",
-        "responses": [
-          {
-            "test_number": "1",
-            "response_data": responesJsonData, 
-          }
-        ],
-      };
+      userId: uid,
+      submission: submissionJson
+    };
 
     console.log(final_response);
     fetch(submitUrl, {
@@ -141,7 +181,6 @@ function Test() {
         }
       })
       .catch((error) => {
-        // Handle network errors or other issues.
         console.error("Network error:", error);
       });
   };
@@ -151,9 +190,10 @@ function Test() {
   };
 
   const currentItem = jsonData[currentIndex];
+
   const handleOptionChange = (option) => {
     setSelectedOption(option);
-    if (option !== currentItem.correctAnswer) {
+    if (option !== currentItem.Correct_answer) {
       setCorrectAnswerVisible(true);
     } else {
       setCorrectAnswerVisible(false);
@@ -168,6 +208,21 @@ function Test() {
 
     responesJsonData[currentIndex].selectedOption = option;
     // console.log(responesJsonData);
+  };
+
+  const handleOptionSelection = (option) => {
+    // setSelectedOption(option);
+    console.log(currentIndex)
+    
+    if(currentSectionTitle=='VARC'){
+    submissionJson.VARC[0][currentIndex].optionSelected = option;}
+    if(currentSectionTitle=='QUANT'){
+    submissionJson.QUANT[0][currentIndex].optionSelected = option;}
+    if(currentSectionTitle=='DILR'){
+    submissionJson.DILR[0][currentIndex].optionSelected = option;}
+    
+    
+    console.log(submissionJson);
   };
 
   useEffect(() => {
@@ -188,67 +243,38 @@ function Test() {
             >
               <div className="sequio__border-radius-left">
                 <h3>VARC</h3>
+
                 <p className="sequio__test-content-p">
-                  Direction for Reading Comprehension: The passages given here
-                  are followed by some questions that have four answer choices;
-                  read the passage carefully and pick the option whose answer
-                  best aligns with the passage. We cannot travel outside our
-                  neighbourhood without passports. We must wear the same
-                  plainclothes. We must exchange our houses every ten years. We
-                  cannot avoid labour. We all go to bed at the same time . . .
-                  We have religious freedom, but we cannot deny that the soul
-                  dies with the body, since 'but for the fear of punishment,
-                  they would have nothing but contempt for the laws and customs
-                  of society'. . . . In More's time, for much of the population,
-                  given the plenty and security on offer, such restraints would
-                  not have seemed overly unreasonable. For modern readers,
-                  however, Utopia appears to rely upon relentless transparency,
-                  the repression of variety, and the curtailment of privacy.
-                  Utopia provides security. Such a conclusion might be fortified
-                  by examining selectively the tradition which follows more on
-                  these points. This often portrays societies where. . .'it
-                  would be almost impossible for man to be depraved, or wicked'.
-                  . . . This is achieved both through institutions and mores,
-                  which underpin the common life. . .. The passions are
-                  regulated and inequalities of wealth and distinction are
-                  minimized. Needs, vanity, and emulation are restrained, often
-                  by prizing equality and holding riches in contempt. The desire
-                  for public power is curbed. Marriage and sexual intercourse
-                  are often controlled: in Tommaso Campanella's The City of the
-                  Sun (1623), the firstst great literary utopia after More's,
-                  relations are forbidden to men before the age of twenty-one
-                  and women before nineteen. Communal child-rearing is normal;
-                  for Campanella this commences at age two. Greater simplicity
-                  of life, 'living according to nature', is often a result: the
-                  desire for simplicity and purity are closely related. People
-                  become more alike in appearance, opinion, and outlook than
-                  they often have been. Unity, order, and homogeneity thus
-                  prevail at the cost of individuality and diversity.
+                  {currentItem.Comp_body}
                 </p>
               </div>
 
               <div className="sequio__border-radius-center">
                 <h2 className="sequio__test-content-h2">
-                  Question {currentItem.questionId}:
+                  Question {currentItem.QuestionId + 1}:
                 </h2>
                 <hr /> <br />
                 <h2 className="sequio__test-content-h2">
-                  {currentItem.questionBody}:
+                  {currentItem.Question}:
                 </h2>
                 <h4>Select an option:</h4>
                 <ul className="sequio__test-content__grid-container-options">
-                  {currentItem.options.map((option, setCurrentIndex) => (
-                    <li key={setCurrentIndex}>
-                      <input
-                        type="radio"
-                        name="options"
-                        value={option}
-                        checked={selectedOption === option}
-                        onChange={() => handleOptionChange(option)}
-                      />
-                      <h4>{option}</h4>
-                    </li>
-                  ))}
+                  {Object.keys(currentItem)
+                    .filter((key) => key.startsWith("Opt_"))
+                    .map((key) => (
+                      <li key={key}>
+                        <input
+                          type="radio"
+                          name="options"
+                          value={currentItem[key]}
+                          checked={selectedOption === currentItem[key]}
+                          onChange={() =>
+                            handleOptionSelection(currentItem[key])
+                          }
+                        />
+                        <h4>{currentItem[key]}</h4>
+                      </li>
+                    ))}
                 </ul>
                 {/* {correctAnswerVisible && (
                         <p className="sequio__test-content-p-answer">Correct Answer: {currentItem.correctAnswer}</p>
