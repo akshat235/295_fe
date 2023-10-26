@@ -21,7 +21,10 @@ const navigate = useNavigate();
 
 
   useEffect(() => {
-    const apiURL = "http://127.0.0.1:5000/dashboard/test_data/";
+    // const encodedUserId = encodeURIComponent(loggedinuserid);
+    // const loggedinu = String(loggedinuserid)
+    const apiURL =`http://127.0.0.1:5000/dashboard/test_data/`;
+    // const apiURL =`http://127.0.0.1:5000/dashboard/test_data/userid=${loggedinuserid}`;
 
     (async () => {
       try {
@@ -35,6 +38,7 @@ const navigate = useNavigate();
 
         const data = await response.json();
         setResponseJsonData(data);
+        console.log("Fetched Successfully");
         
       } catch (error) {
         console.error("Error fetching data:", error);

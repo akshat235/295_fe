@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./Test.css";
-import jsonData from "./../../database/questions.json";
+import jsonDataVARC from "./../../database/questions_varc.json";
+import jsonDataDILR from "./../../database/questions_dilr.json";
+import jsonDataQUANT from "./../../database/questions_quant.json";
 import { useNavigate } from "react-router-dom";
 
 function formatTime(seconds) {
@@ -14,16 +16,16 @@ function formatTime(seconds) {
   return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
 }
 
-const submissionJson = { VARC: [jsonData.map(item => ({
+const submissionJson = { VARC: [jsonDataVARC.map(item => ({
     questionid: item.QuestionId,
     correctans: item.Correct_answer,
     optionSelected:""
   }))
-  ] ,  QUANT: [jsonData.map(item => ({
+  ] ,  QUANT: [jsonDataQUANT.map(item => ({
     questionid: item.QuestionId,
     correctans: item.Correct_answer,
     optionSelected:""
-  }))] , DILR: [jsonData.map(item => ({
+  }))] , DILR: [jsonDataDILR.map(item => ({
     questionid: item.QuestionId,
     correctans: item.Correct_answer,
     optionSelected:""
@@ -38,6 +40,7 @@ function Test() {
   const [correctAnswerMessage, setcorrectAnswerMessage] = useState(false);
   const [divCount, setDivCount] = useState(1);
   const [timer, setTimer] = useState(40 * 60);
+  const [dataToUse, setDataToUse] = useState(jsonDataVARC);
   const [showModal, setShowModal] = useState(false);
   //   const [jsonData, setJsonData] = useState([
   //     {
@@ -50,7 +53,7 @@ function Test() {
   const [responesJsonData, setResponseJsonData] = useState("");
   const [currentSectionTitle, setCurrentSectionTitle] = useState("VARC");
   const VARCresponse = {
-    VARC: jsonData.map(item => ({
+    VARC: dataToUse.map(item => ({
       questionid: item.QuestionId,
       correctans: item.Correct_answer,
       optionSelected:""
@@ -86,6 +89,26 @@ function Test() {
       return;
     }
   }, []);
+
+  useEffect(() => {
+    if(currentSectionTitle == "VARC")
+    {
+        setDataToUse(jsonDataVARC);
+    }
+    else if(currentSectionTitle == "QUANT")
+    {
+        setDataToUse(jsonDataQUANT);
+    }
+    else if(currentSectionTitle == "DILR")
+    {
+        setDataToUse(jsonDataDILR);
+    }
+    
+    
+  }, [currentSectionTitle]);
+
+
+
 
   //   useEffect(() => {
   //     const apiUrl = "http://127.0.0.1:5000/test/questions";
@@ -135,7 +158,7 @@ function Test() {
   ));
 
   const handleNextClick = () => {
-    if (currentIndex <= jsonData.length - 1) {
+    if (currentIndex <= dataToUse.length - 1) {
       console.log(currentIndex);
       setCurrentIndex(currentIndex + 1);
       setCorrectAnswerVisible(false);
@@ -156,7 +179,26 @@ function Test() {
     }
   };
 
-  const handleSubmitRespose = () => {
+  const handleSectionSubmit = () => {
+    if(currentSectionTitle == "DILR"){
+        handleSubmitResponse();
+    }
+    else if(currentSectionTitle == "VARC")
+    {
+        setCurrentSectionTitle("QUANT");
+        setCurrentIndex(0);
+    }
+    else if(currentSectionTitle == "QUANT")
+    {
+        setCurrentSectionTitle("DILR");
+        setCurrentIndex(0);
+    }
+
+  };
+
+
+
+  const handleSubmitResponse = () => {
     const submitUrl = "http://127.0.0.1:5000/test/submitresponse";
     const uid = localStorage.getItem("userID");
     const final_response = {
@@ -189,7 +231,7 @@ function Test() {
     setShowModal(false);
   };
 
-  const currentItem = jsonData[currentIndex];
+  const currentItem = dataToUse[currentIndex];
 
   const handleOptionChange = (option) => {
     setSelectedOption(option);
@@ -226,8 +268,8 @@ function Test() {
   };
 
   useEffect(() => {
-    setDivCount(jsonData.length);
-  }, [jsonData]);
+    setDivCount(dataToUse.length);
+  }, [dataToUse]);
 
   return (
     <>
@@ -242,7 +284,7 @@ function Test() {
               key={setCurrentIndex}
             >
               <div className="sequio__border-radius-left">
-                <h3>VARC</h3>
+                <h3>{currentSectionTitle}</h3>
 
                 <p className="sequio__test-content-p">
                   {currentItem.Comp_body}
@@ -311,7 +353,7 @@ function Test() {
                 </span>
               </button>
             )}
-            {currentIndex === jsonData.length - 1 ? (
+            {currentIndex === dataToUse.length - 1 ? (
               <button className="sequio__navigation-btns">
                 <span
                   className="material-symbols-outlined icon-padding"
@@ -330,10 +372,10 @@ function Test() {
                 </span>
               </button>
             )}
-            {currentIndex === jsonData.length - 1 ? (
+            {currentIndex === dataToUse.length - 1 ? (
               <button
                 className="sequio__navigation-btns__submit"
-                onClick={handleSubmitRespose}
+                onClick={handleSectionSubmit}
               >
                 Submit
               </button>
