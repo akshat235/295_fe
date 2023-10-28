@@ -7,6 +7,7 @@ function Header() {
   const [responseJsonData, setResponseJsonData] = useState({});
   const [percentage, setPercentage] = useState(0);
   const [totalScore, setTotalScore] = useState(0);
+  const [averageWoW, setAverageWoW] = useState(0);
   const [wrongAnswered, setWrongAnswered] = useState(0);
   const loggedinuserid = localStorage.getItem("userID");
 const navigate = useNavigate();
@@ -19,11 +20,35 @@ const navigate = useNavigate();
     }
   }, []);
 
+  useEffect(() => {
+    const send_id_url = 'http://127.0.0.1:5000/dashboard/send_userid';
+  
+    const fetchData = async () => {
+      try {
+        const response = await fetch(send_id_url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ 'userID': loggedinuserid }),
+        });
+  
+        if (!response.ok) {
+          console.log('Sending userID failed');
+          throw new Error('Request failed');
+        }
+        console.log('User ID sent successfully');
+      } catch (error) {
+        console.error('Error sending userID:', error);
+      }
+    };
+  
+    fetchData();
+  }, []);
+
 
   useEffect(() => {
-    // const encodedUserId = encodeURIComponent(loggedinuserid);
-    // const loggedinu = String(loggedinuserid)
-    const apiURL =`http://127.0.0.1:5000/dashboard/test_data/`;
+        const apiURL =`http://127.0.0.1:5000/dashboard/test_data`;
     // const apiURL =`http://127.0.0.1:5000/dashboard/test_data/userid=${loggedinuserid}`;
 
     (async () => {
@@ -35,11 +60,10 @@ const navigate = useNavigate();
             console.log("Loading responseJsonData failed");
             throw new Error("Request failed");
           }
-
         const data = await response.json();
         setResponseJsonData(data);
+        console.log(data);
         console.log("Fetched Successfully");
-        
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -53,9 +77,10 @@ const navigate = useNavigate();
         }
         console.log("Loaded data successfully!");
         // const p = calculatePercentage(responseJsonData);
-        setPercentage(responseJsonData[0].percentagecorrect);
+        setPercentage(responseJsonData[responseJsonData.length - 3].percentagecorrect);
+        setAverageWoW(responseJsonData[responseJsonData.length - 2].average_growth);
         // console.log("Updated p", percentage);
-        setTotalScore(responseJsonData[0].finalscore);
+        setTotalScore(responseJsonData[responseJsonData.length - 3].finalscore);
         // console.log("Updated t", totalScore);
         // console.log(responseJsonData[0].finalscore);
   },[responseJsonData]);
@@ -121,7 +146,8 @@ const navigate = useNavigate();
                   fill="white"
                 />
               </svg>
-              <p>32%</p>
+              {console.log("AVERAGEWOW_____", averageWoW)}
+              <p>{averageWoW}%</p>
               <label>Week - Week growth</label>
             </div>
             <div class="sequio__dashboard-content-container-grid-item2">

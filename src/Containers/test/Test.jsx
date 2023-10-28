@@ -89,6 +89,7 @@ function Test() {
       return;
     }
   }, []);
+  
 
   useEffect(() => {
     if(currentSectionTitle == "VARC")
@@ -106,8 +107,6 @@ function Test() {
     
     
   }, [currentSectionTitle]);
-
-
 
 
   //   useEffect(() => {
