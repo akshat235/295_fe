@@ -8,58 +8,57 @@ function Header() {
   const [percentage, setPercentage] = useState(0);
   const [totalScore, setTotalScore] = useState(0);
   const [averageWoW, setAverageWoW] = useState(0);
+  const [imageUrl, setImageUrl] = useState(null);
   const [wrongAnswered, setWrongAnswered] = useState(0);
   const loggedinuserid = localStorage.getItem("userID");
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const loggedIn = localStorage.getItem("loggedIn");
-    if (loggedIn == 'false') {
+    if (loggedIn == "false") {
       navigate("/login");
       return;
     }
   }, []);
 
   useEffect(() => {
-    const send_id_url = 'http://127.0.0.1:5000/dashboard/send_userid';
-  
+    const send_id_url = "http://127.0.0.1:5000/dashboard/send_userid";
+
     const fetchData = async () => {
       try {
         const response = await fetch(send_id_url, {
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
-          body: JSON.stringify({ 'userID': loggedinuserid }),
+          body: JSON.stringify({ userID: loggedinuserid }),
         });
-  
+
         if (!response.ok) {
-          console.log('Sending userID failed');
-          throw new Error('Request failed');
+          console.log("Sending userID failed");
+          throw new Error("Request failed");
         }
-        console.log('User ID sent successfully');
+        console.log("User ID sent successfully");
       } catch (error) {
-        console.error('Error sending userID:', error);
+        console.error("Error sending userID:", error);
       }
     };
-  
+
     fetchData();
   }, []);
 
-
   useEffect(() => {
-        const apiURL =`http://127.0.0.1:5000/dashboard/test_data`;
-    // const apiURL =`http://127.0.0.1:5000/dashboard/test_data/userid=${loggedinuserid}`;
+    const apiURL = `http://127.0.0.1:5000/dashboard/test_data`;
 
     (async () => {
       try {
         console.log("fetching data");
         const response = await fetch(apiURL);
-        
+
         if (!response.ok) {
-            console.log("Loading responseJsonData failed");
-            throw new Error("Request failed");
-          }
+          console.log("Loading responseJsonData failed");
+          throw new Error("Request failed");
+        }
         const data = await response.json();
         setResponseJsonData(data);
         console.log(data);
@@ -70,21 +69,35 @@ const navigate = useNavigate();
     })();
   }, []);
 
-  useEffect(()=> {
-        if (Object.keys(responseJsonData).length === 0) {
-            // Empty object - Default scenario - skip it
-            return;
-        }
-        console.log("Loaded data successfully!");
-        // const p = calculatePercentage(responseJsonData);
-        setPercentage(responseJsonData[responseJsonData.length - 3].percentagecorrect);
-        setAverageWoW(responseJsonData[responseJsonData.length - 2].average_growth);
-        // console.log("Updated p", percentage);
-        setTotalScore(responseJsonData[responseJsonData.length - 3].finalscore);
-        // console.log("Updated t", totalScore);
-        // console.log(responseJsonData[0].finalscore);
-  },[responseJsonData]);
+  useEffect(() => {
+    if (Object.keys(responseJsonData).length === 0) {
+      // Empty object - Default scenario - skip it
+      return;
+    }
+    setPercentage(
+      responseJsonData[responseJsonData.length - 3].percentagecorrect
+    );
+    setAverageWoW(responseJsonData[responseJsonData.length - 2].average_growth);
+    setTotalScore(responseJsonData[responseJsonData.length - 3].finalscore);
+    console.log("Loaded data successfully!");
+  }, [responseJsonData]);
 
+  useEffect(() => {
+    fetch("http://127.0.0.1:5000/dashboard/get_image")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.blob();
+      })
+      .then((imageBlob) => {
+        const url = URL.createObjectURL(imageBlob);
+        setImageUrl(url);
+      })
+      .catch((error) => {
+        console.error("There was a problem fetching the image:", error);
+      });
+  }, []);
 
   function calculatePercentage(apiResponse) {
     let correctAnswersCount = 0;
@@ -100,16 +113,8 @@ const navigate = useNavigate();
 
     const percentage = (correctAnswersCount / totalQuestionsCount) * 100;
 
-    return percentage
+    return percentage;
   }
-
-//   useEffect(() => {
-//     setPercentage(calculatePercentage(responseJsonData).percentage);
-// setTotalScore(responseJsonData[0].total_score);
-//   }, [responseJsonData])
-
-
-
 
   return (
     <>
@@ -123,7 +128,7 @@ const navigate = useNavigate();
                 height="68"
                 viewBox="0 0 66 68"
                 fill="none"
-              > 
+              >
                 <path
                   d="M44 31.1666C48.565 31.1666 52.2225 27.37 52.2225 22.6666C52.2225 17.9633 48.565 14.1666 44 14.1666C39.435 14.1666 35.75 17.9633 35.75 22.6666C35.75 27.37 39.435 31.1666 44 31.1666ZM22 31.1666C26.565 31.1666 30.2225 27.37 30.2225 22.6666C30.2225 17.9633 26.565 14.1666 22 14.1666C17.435 14.1666 13.75 17.9633 13.75 22.6666C13.75 27.37 17.435 31.1666 22 31.1666ZM22 36.8333C15.5925 36.8333 2.75 40.1483 2.75 46.75V53.8333H41.25V46.75C41.25 40.1483 28.4075 36.8333 22 36.8333ZM44 36.8333C43.2025 36.8333 42.295 36.89 41.3325 36.975C44.5225 39.355 46.75 42.5566 46.75 46.75V53.8333H63.25V46.75C63.25 40.1483 50.4075 36.8333 44 36.8333Z"
                   fill="white"
@@ -179,7 +184,7 @@ const navigate = useNavigate();
                   fill="white"
                 />
               </svg>
-              <p>{48-totalScore}</p>
+              <p>{48 - totalScore}</p>
               <label>Incorrect Answers</label>
             </div>
           </div>
@@ -235,8 +240,11 @@ const navigate = useNavigate();
           <div class="sequio__dashboard-content-container3">
             <div class="sequio__dashboard-content-container-grid3-item">
               <p>WoW score growth</p>
-              
-              {/* <img src={chart} alt="logo" /> */}
+
+              <div>
+                {imageUrl && <img src={imageUrl} alt="Generated Image" id="performance_graph" />}
+              </div>
+
             </div>
           </div>
         </div>
