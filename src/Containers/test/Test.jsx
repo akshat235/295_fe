@@ -128,7 +128,7 @@ function Test() {
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
-        return response.json(); // Parse the response as JSON
+        return response.json();
       })
       .then((responseData) => {
         console.log(responseData);
@@ -161,7 +161,7 @@ function Test() {
     } else if (currentSectionTitle == "DILR") {
       setDataToUse(paperToUse[1]);
     }
-  }, [currentSectionTitle]);
+  }, [currentSectionTitle, paperToUse]);
 
   //   useEffect(() => {
   //     const apiUrl = "http://127.0.0.1:5000/test/questions";
@@ -187,19 +187,20 @@ function Test() {
       if (timer > 0) {
         setTimer(timer - 1);
       } else {
-        if (currentSectionTitle == "VARC"){
+        if (currentSectionTitle == "VARC") {
           setCurrentSectionTitle("QUANT");
           setTimer(40 * 60);
           // setTimer(2);
         }
-        if (currentSectionTitle == "QUANT"){
+        if (currentSectionTitle == "QUANT") {
           setCurrentSectionTitle("DILR");
           setTimer(40 * 60);
           // setTimer(2);
         }
-        if ((currentSectionTitle == "DILR") && (timer===0)){
+        if (currentSectionTitle == "DILR" && timer === 0) {
           setShowModal(true);
-        }}
+        }
+      }
     }, 1000);
 
     return () => {
@@ -342,11 +343,12 @@ function Test() {
     setDivCount(dataToUse.length);
   }, [dataToUse]);
 
-  return (
-    <>
-      {loading ? (
-        <TailSpin color="red" radius={"8px"} />
-      ) : (
+  // fetchData();
+
+  if (!loading) {
+    return (
+      <>
+        (
         <>
           <div className="sequio__test" id="home">
             <div className="sequio__test-content">
@@ -437,28 +439,50 @@ function Test() {
                 <button
                   className="sequio__navigation-btns"
                   disabled={currentIndex === 0}
+                  onClick={currentIndex !== 0 ? handlePreviousClick : null}
                 >
-                  <span
+                  {/* <span
                     className="material-symbols-outlined icon-padding"
                     onClick={currentIndex !== 0 ? handlePreviousClick : null}
                   >
                     arrow_back_ios
-                  </span>
+                  </span> */}
+
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="11"
+                    height="18"
+                    viewBox="0 0 11 18"
+                    fill="none"
+                    className="sequio__icon_btns"
+                  >
+                    <path
+                      d="M0 9L9 18L10.4 16.5L3 9L10.4 1.5L9 0L0 9Z"
+                      fill="black"
+                    />
+                  </svg>
                 </button>
                 <button
                   className="sequio__navigation-btns"
                   disabled={currentIndex === dataToUse.length - 1}
+                  onClick={
+                    currentIndex !== dataToUse.length - 1
+                      ? handleNextClick
+                      : null}
                 >
-                  <span
+                  {/* <span
                     className="material-symbols-outlined icon-padding"
                     onClick={
                       currentIndex !== dataToUse.length - 1
                         ? handleNextClick
                         : null
-                    }
-                  >
-                    arrow_forward_ios
-                  </span>
+                    } */}
+                  {/* > */}
+                  <svg xmlns="http://www.w3.org/2000/svg" width="11" height="18" viewBox="0 0 11 18" fill="none" className="sequio__icon_btns" >
+<path d="M1.99998 0L0.599976 1.5L7.99998 9L0.599976 16.5L1.99998 18L11 9L1.99998 0Z" fill="black"/>
+</svg>
+                  {/* arrow_forward_ios  */}
+                  {/* </span> */}
                 </button>
                 {currentIndex === dataToUse.length - 1 ? (
                   <button
@@ -475,7 +499,7 @@ function Test() {
               </div>
             </div>
           </div>
-          {(showModal && (currentSectionTitle === "DILR")) && (
+          {showModal && currentSectionTitle === "DILR" && (
             <div className="modal">
               <div className="modal-content">
                 <h2>Time's Up!</h2>
@@ -484,137 +508,11 @@ function Test() {
             </div>
           )}
         </>
-      )}
-    </>
-  );
-
-  // return (
-  //   <>
-  //     <div className="sequio__test" id="home">
-  //       <div className="sequio__test-content">
-  //         <div className="timer">
-  //           <p>Time Left: {formatTime(timer)}</p>
-  //         </div>
-  //         <div className="sequio__test-content__container">
-  //           <div
-  //             className="sequio__test-content__grid-container"
-  //             key={setCurrentIndex}
-  //           >
-  //             <div className="sequio__border-radius-left">
-  //               <h3>{currentSectionTitle}</h3>
-
-  //               <p className="sequio__test-content-p">
-  //                 {currentItem.Comp_body}
-  //               </p>
-  //             </div>
-
-  //             <div className="sequio__border-radius-center">
-  //               <h2 className="sequio__test-content-h2">
-  //                 Question {currentItem.QuestionId + 1}:
-  //               </h2>
-  //               <hr /> <br />
-  //               <h2 className="sequio__test-content-h2">
-  //                 {currentItem.Question}:
-  //               </h2>
-  //               <h4>Select an option:</h4>
-  //               <ul className="sequio__test-content__grid-container-options">
-  //                 {Object.keys(currentItem)
-  //                   .filter((key) => key.startsWith("Opt_"))
-  //                   .map((key) => (
-  //                     <li key={key}>
-  //                       <input
-  //                         type="radio"
-  //                         name="options"
-  //                         value={currentItem[key]}
-  //                         checked={selectedOption === currentItem[key]}
-  //                         onChange={() =>
-  //                           handleOptionSelection(currentItem[key])
-  //                         }
-  //                       />
-  //                       <h4>{currentItem[key]}</h4>
-  //                     </li>
-  //                   ))}
-  //               </ul>
-  //               {/* {correctAnswerVisible && (
-  //                       <p className="sequio__test-content-p-answer">Correct Answer: {currentItem.correctAnswer}</p>
-  //                   )}
-  //                   {correctAnswerMessage && (
-  //                       <p className="sequio__test-content-p-answer-right">You Got that right!</p>
-  //                   )} */}
-  //             </div>
-
-  //             <div className="sequio__border-radius-right">
-  //               <div className="sequio__content-Question-sequence-container">
-  //                 {divElements}
-  //               </div>
-  //             </div>
-  //           </div>
-  //         </div>
-  //         <div>
-  //           {currentIndex === 0 ? (
-  //             <button className="sequio__navigation-btns">
-  //               <span
-  //                 className="material-symbols-outlined icon-padding"
-  //                 disabled
-  //               >
-  //                 arrow_back_ios
-  //               </span>
-  //             </button>
-  //           ) : (
-  //             <button className="sequio__navigation-btns">
-  //               <span
-  //                 className="material-symbols-outlined icon-padding"
-  //                 onClick={handlePreviousClick}
-  //               >
-  //                 arrow_back_ios
-  //               </span>
-  //             </button>
-  //           )}
-  //           {currentIndex === dataToUse.length - 1 ? (
-  //             <button className="sequio__navigation-btns">
-  //               <span
-  //                 className="material-symbols-outlined icon-padding"
-  //                 disabled
-  //               >
-  //                 arrow_forward_ios
-  //               </span>
-  //             </button>
-  //           ) : (
-  //             <button className="sequio__navigation-btns">
-  //               <span
-  //                 className="material-symbols-outlined icon-padding"
-  //                 onClick={handleNextClick}
-  //               >
-  //                 arrow_forward_ios
-  //               </span>
-  //             </button>
-  //           )}
-  //           {currentIndex === dataToUse.length - 1 ? (
-  //             <button
-  //               className="sequio__navigation-btns__submit"
-  //               onClick={handleSectionSubmit}
-  //             >
-  //               Submit
-  //             </button>
-  //           ) : (
-  //             <button className="sequio__navigation-btns__submit" disabled>
-  //               Submit
-  //             </button>
-  //           )}
-  //         </div>
-  //       </div>
-  //     </div>
-  //     {/* Modal for "Time's Up" message */}
-  //     {showModal && (
-  //       <div className="modal">
-  //         <div className="modal-content">
-  //           <h2>Time's Up!</h2>
-  //           <button>Go to Dashboard</button>
-  //         </div>
-  //       </div>
-  //     )}
-  //   </>
-  // );
+        )
+      </>
+    );
+  }
+  
 }
 
 export default Test;

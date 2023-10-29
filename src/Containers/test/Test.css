@@ -166,6 +166,10 @@ hr {
     text-align: center;
 }
 
+.sequio__icon_btns{
+    margin-top: 0.5rem;
+}
+
 .icon-padding {
     padding: 9px;
     align-self: center;
