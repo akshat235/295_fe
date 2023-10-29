@@ -112,6 +112,34 @@ function SignUpPage() {
             .then((response) => {
               if (response.ok) {
                 console.log("Registration successful");
+                localStorage.setItem("userFirstName", data.firstName);
+                localStorage.setItem("loggedIn", true);
+                
+                const login_data = {
+                  username: email,
+                  password: password
+                };
+            
+                fetch("http://127.0.0.1:5000/auth/login", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify(login_data),
+                }).then(response => {
+                  let datajson;
+                  datajson = response.json();
+                  console.log(datajson);
+          
+                  if (response.ok) {
+                    console.log(datajson.user_data.firstName);
+                    localStorage.setItem("loggedIn", true);
+                    localStorage.setItem("userFirstName", datajson.user_data.firstname);
+                    localStorage.setItem("userID", datajson.user_data.userId);
+                    console.log("Login successful");
+                    navigate("/header");
+              }});
+                // localStorage.setItem("userID", data.userName);
                 navigate('/header')
               } else {
                 console.error("Registration failed");

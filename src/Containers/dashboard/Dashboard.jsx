@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./Dashboard.css";
 import { useNavigate } from "react-router-dom";
 // import chart from '../../assests/lineChart.png';
+import { TailSpin } from "react-loader-spinner";
 
 function Header() {
   const [responseJsonData, setResponseJsonData] = useState({});
@@ -9,19 +10,27 @@ function Header() {
   const [totalScore, setTotalScore] = useState(0);
   const [averageWoW, setAverageWoW] = useState(0);
   const [imageUrl, setImageUrl] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [wrongAnswered, setWrongAnswered] = useState(0);
   const loggedinuserid = localStorage.getItem("userID");
   const navigate = useNavigate();
 
+  // useEffect(() => {
+    // const loggedIn = localStorage.getItem("loggedIn");
+    // if (loggedIn == "false") {
+    //   navigate("/login");
+    //   return;}
+  //   }
+  // }, []);
+
   useEffect(() => {
+    setLoading(true);
+
     const loggedIn = localStorage.getItem("loggedIn");
     if (loggedIn == "false") {
       navigate("/login");
-      return;
-    }
-  }, []);
+      return;}
 
-  useEffect(() => {
     const send_id_url = "http://127.0.0.1:5000/dashboard/send_userid";
 
     const fetchData = async () => {
@@ -43,11 +52,8 @@ function Header() {
         console.error("Error sending userID:", error);
       }
     };
-
     fetchData();
-  }, []);
 
-  useEffect(() => {
     const apiURL = `http://127.0.0.1:5000/dashboard/test_data`;
 
     (async () => {
@@ -67,7 +73,46 @@ function Header() {
         console.error("Error fetching data:", error);
       }
     })();
+
+    fetch("http://127.0.0.1:5000/dashboard/get_image")
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.blob();
+    })
+    .then((imageBlob) => {
+      const url = URL.createObjectURL(imageBlob);
+      setImageUrl(url);
+    })
+    .catch((error) => {
+      console.error("There was a problem fetching the image:", error);
+    });
+    setLoading(false);
+
   }, []);
+
+  // useEffect(() => {
+  //   const apiURL = `http://127.0.0.1:5000/dashboard/test_data`;
+
+  //   (async () => {
+  //     try {
+  //       console.log("fetching data");
+  //       const response = await fetch(apiURL);
+
+  //       if (!response.ok) {
+  //         console.log("Loading responseJsonData failed");
+  //         throw new Error("Request failed");
+  //       }
+  //       const data = await response.json();
+  //       setResponseJsonData(data);
+  //       console.log(data);
+  //       console.log("Fetched Successfully");
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //     }
+  //   })();
+  // }, []);
 
   useEffect(() => {
     if (Object.keys(responseJsonData).length === 0) {
@@ -82,22 +127,22 @@ function Header() {
     console.log("Loaded data successfully!");
   }, [responseJsonData]);
 
-  useEffect(() => {
-    fetch("http://127.0.0.1:5000/dashboard/get_image")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.blob();
-      })
-      .then((imageBlob) => {
-        const url = URL.createObjectURL(imageBlob);
-        setImageUrl(url);
-      })
-      .catch((error) => {
-        console.error("There was a problem fetching the image:", error);
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch("http://127.0.0.1:5000/dashboard/get_image")
+  //     .then((response) => {
+  //       if (!response.ok) {
+  //         throw new Error("Network response was not ok");
+  //       }
+  //       return response.blob();
+  //     })
+  //     .then((imageBlob) => {
+  //       const url = URL.createObjectURL(imageBlob);
+  //       setImageUrl(url);
+  //     })
+  //     .catch((error) => {
+  //       console.error("There was a problem fetching the image:", error);
+  //     });
+  // }, []);
 
   function calculatePercentage(apiResponse) {
     let correctAnswersCount = 0;
@@ -118,7 +163,9 @@ function Header() {
 
   return (
     <>
-      <div className="sequio__dashboard section__padding" id="home">
+      {loading? (
+  <TailSpin color="red" radius={"8px"} />
+)  : (<div className="sequio__dashboard section__padding" id="home">
         <div className="sequio__dashboard-content">
           <div className="sequio__dashboard-content-container">
             <div class="sequio__dashboard-content-container-grid-item">
@@ -248,7 +295,7 @@ function Header() {
             </div>
           </div>
         </div>
-      </div>
+      </div>)}
     </>
   );
 }

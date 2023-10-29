@@ -8,13 +8,17 @@ import { useNavigate } from "react-router-dom";
 
 
 function Header() {
-  
-  const [firstName, setFirstName] = useState("");
+
+  const [firstName, setFirstName] = useState(" ");
+
    useEffect(() => {
     const userFirstName = localStorage.getItem("userFirstName");
     if (userFirstName) {
       setFirstName(userFirstName);
-    }}, []);
+    }
+  else{
+    setFirstName("")
+  }}, []);
   const navigate = useNavigate();
 
 

@@ -10,6 +10,7 @@ import VARC_paper_1 from "./../../CAT_Papers/CAT VARC - 2022 - Slot 1.json";
 import VARC_paper_2 from "./../../CAT_Papers/CAT VARC - 2022 - Slot 2.json";
 import VARC_paper_3 from "./../../CAT_Papers/CAT VARC - 2022 - Slot 3.json";
 import { useNavigate } from "react-router-dom";
+import { TailSpin } from "react-loader-spinner";
 
 function formatTime(seconds) {
   const hours = Math.floor(seconds / 3600);
@@ -21,7 +22,6 @@ function formatTime(seconds) {
   return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
 }
 
-
 function Test() {
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -30,6 +30,7 @@ function Test() {
   const [correctAnswerMessage, setcorrectAnswerMessage] = useState(false);
   const [divCount, setDivCount] = useState(1);
   const [timer, setTimer] = useState(40 * 60);
+  const [loading, setLoading] = useState(false);
 
   const [dataToUse, setDataToUse] = useState(jsonDataVARC);
   const [showModal, setShowModal] = useState(false);
@@ -37,12 +38,15 @@ function Test() {
   const paper2 = [VARC_paper_2, DILR_paper_2];
   const paper3 = [VARC_paper_3, DILR_paper_3];
   const papers = [paper1, paper2, paper3];
-  const papers_list = {'1':paper1, '2':paper2, '3':paper3}
+
+  const papers_list = { 1: paper1, 2: paper2, 3: paper3 };
   const [paperToUse, setPaperToUse] = useState(papers[0]);
   const [sectionToUse, setSectionToUse] = useState(paper1[0]);
   const [responesJsonData, setResponseJsonData] = useState("");
   const [currentSectionTitle, setCurrentSectionTitle] = useState("VARC");
-  const [loggedInUserId, setLoggedInUserID] = useState(localStorage.getItem("userID"));
+  const [loggedInUserId, setLoggedInUserID] = useState(
+    localStorage.getItem("userID")
+  );
   // const VARCresponse = {
   //   VARC: paperToUse[0].map((item) => ({
   //     questionid: item.QuestionId,
@@ -61,7 +65,6 @@ function Test() {
       return originalLink;
     }
   }
-
 
   const submissionJson = {
     VARC: [
@@ -86,23 +89,15 @@ function Test() {
       })),
     ],
   };
-  
+
   const [sectionSubmission, setSectionSubmission] = useState({});
 
-  useEffect(() => {
-    const loggedIn = localStorage.getItem("loggedIn");
-    if (loggedIn == "false") {
-      navigate("/login");
-      return;
-    }
-  }, []);
-
-  useEffect(() => {
+  const sendUserIdAndGetPaper = async () => {
     const send_id_url = "http://127.0.0.1:5000/test/get_paper_number";
 
     const fetchData = async () => {
       try {
-        console.log(loggedInUserId)
+        console.log(loggedInUserId);
         const response = await fetch(send_id_url, {
           method: "POST",
           headers: {
@@ -124,25 +119,38 @@ function Test() {
     fetchData();
 
     fetch(send_id_url, {
-      method: 'GET', 
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error("Network response was not ok");
         }
         return response.json(); // Parse the response as JSON
       })
       .then((responseData) => {
-        console.log(responseData.paper_number);
-        setPaperToUse(papers[responseData.paper_number]); 
-        // console.log()
+        console.log(responseData);
+        setPaperToUse(papers[responseData.paper_number]);
+        console.log(paperToUse);
       })
       .catch((error) => {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       });
+  };
+
+  useEffect(() => {
+    setLoading(true);
+
+    const loggedIn = localStorage.getItem("loggedIn");
+    if (loggedIn == "false") {
+      navigate("/login");
+      return;
+    }
+
+    sendUserIdAndGetPaper();
+    setLoading(false);
   }, []);
 
   useEffect(() => {
@@ -179,8 +187,19 @@ function Test() {
       if (timer > 0) {
         setTimer(timer - 1);
       } else {
-        setShowModal(true);
-      }
+        if (currentSectionTitle == "VARC"){
+          setCurrentSectionTitle("QUANT");
+          setTimer(40 * 60);
+          // setTimer(2);
+        }
+        if (currentSectionTitle == "QUANT"){
+          setCurrentSectionTitle("DILR");
+          setTimer(40 * 60);
+          // setTimer(2);
+        }
+        if ((currentSectionTitle == "DILR") && (timer===0)){
+          setShowModal(true);
+        }}
     }, 1000);
 
     return () => {
@@ -325,126 +344,146 @@ function Test() {
 
   return (
     <>
-      <div className="sequio__test" id="home">
-        <div className="sequio__test-content">
-          <div className="timer">
-            <p>Time Left: {formatTime(timer)}</p>
-          </div>
-          <div className="sequio__test-content__container">
-            <div
-              className="sequio__test-content__grid-container"
-              key={currentIndex}
-            >
-              <div className="sequio__border-radius-left">
-                <h3>{currentSectionTitle}</h3>
-                <p className="sequio__test-content-p">
-                  {/* {regexPattern.test(currentItem.Image1)} */}
-                  {currentItem.Image1 &&  <img src={convertDriveLink(currentItem.Image1)} alt="Question Image" />} <p></p>
-                  {currentItem.Image2 &&  <img src={convertDriveLink(currentItem.Image2)} alt="Question Image" />} <p></p>
-                  {currentItem.Comp_body}
-                </p>
+      {loading ? (
+        <TailSpin color="red" radius={"8px"} />
+      ) : (
+        <>
+          <div className="sequio__test" id="home">
+            <div className="sequio__test-content">
+              <div className="timer">
+                <p>Time Left: {formatTime(timer)}</p>
               </div>
-              <div className="sequio__border-radius-center">
-                <h2 className="sequio__test-content-h2">
-                  Question {currentItem.QuestionId}:
-                </h2>
-                <hr />
-                <br />
-                <h2 className="sequio__test-content-h2">
-                  {currentItem.Question}:
-                </h2>
-                {currentItem.Opt_1 ||
-                currentItem.Opt_2 ||
-                currentItem.Opt_3 ||
-                currentItem.Opt_4 ? (
-                  <>
-                    <h4>Select an option:</h4>
-                    <ul className="sequio__test-content__grid-container-options">
-                      {Object.keys(currentItem)
-                        .filter((key) => key.startsWith("Opt_"))
-                        .map((key) => (
-                          <li key={key}>
-                            <input
-                              type="radio"
-                              name="options"
-                              value={currentItem[key]}
-                              checked={selectedOption === currentItem[key]}
-                              onChange={() =>
-                                handleOptionSelection(currentItem[key])
-                              }
-                            />
-                            <h4>{currentItem[key]}</h4>
-                          </li>
-                        ))}
-                    </ul>
-                  </>
-                ) : (
-                  <div>
-                    <h4>Enter your answer here:</h4>
-                    <textarea
-                      placeholder="Your answer..."
-                      value={selectedOption}
-                      onChange={(e) =>
-                        handleOptionSelectionTITA(e.target.value)
-                      }
-                    ></textarea>
+              <div className="sequio__test-content__container">
+                <div
+                  className="sequio__test-content__grid-container"
+                  key={currentIndex}
+                >
+                  <div className="sequio__border-radius-left">
+                    <h3>{currentSectionTitle}</h3>
+                    <p className="sequio__test-content-p">
+                      {/* {regexPattern.test(currentItem.Image1)} */}
+                      {currentItem.Image1 && (
+                        <img
+                          src={convertDriveLink(currentItem.Image1)}
+                          alt="Question Image"
+                        />
+                      )}{" "}
+                      <p></p>
+                      {currentItem.Image2 && (
+                        <img
+                          src={convertDriveLink(currentItem.Image2)}
+                          alt="Question Image"
+                        />
+                      )}{" "}
+                      <p></p>
+                      {currentItem.Comp_body}
+                    </p>
                   </div>
-                )}
-              </div>
-              <div className="sequio__border-radius-right">
-                <div className="sequio__content-Question-sequence-container">
-                  {divElements}
+                  <div className="sequio__border-radius-center">
+                    <h2 className="sequio__test-content-h2">
+                      Question {currentItem.QuestionId}:
+                    </h2>
+                    <hr />
+                    <br />
+                    <h2 className="sequio__test-content-h2">
+                      {currentItem.Question}:
+                    </h2>
+                    {currentItem.Opt_1 ||
+                    currentItem.Opt_2 ||
+                    currentItem.Opt_3 ||
+                    currentItem.Opt_4 ? (
+                      <>
+                        <h4>Select an option:</h4>
+                        <ul className="sequio__test-content__grid-container-options">
+                          {Object.keys(currentItem)
+                            .filter((key) => key.startsWith("Opt_"))
+                            .map((key) => (
+                              <li key={key}>
+                                <input
+                                  type="radio"
+                                  name="options"
+                                  value={currentItem[key]}
+                                  checked={selectedOption === currentItem[key]}
+                                  onChange={() =>
+                                    handleOptionSelection(currentItem[key])
+                                  }
+                                />
+                                <h4>{currentItem[key]}</h4>
+                              </li>
+                            ))}
+                        </ul>
+                      </>
+                    ) : (
+                      <div>
+                        <h4>Enter your answer here:</h4>
+                        <textarea
+                          placeholder="Your answer..."
+                          value={selectedOption}
+                          onChange={(e) =>
+                            handleOptionSelectionTITA(e.target.value)
+                          }
+                        ></textarea>
+                      </div>
+                    )}
+                  </div>
+                  <div className="sequio__border-radius-right">
+                    <div className="sequio__content-Question-sequence-container">
+                      {divElements}
+                    </div>
+                  </div>
                 </div>
+              </div>
+              <div>
+                <button
+                  className="sequio__navigation-btns"
+                  disabled={currentIndex === 0}
+                >
+                  <span
+                    className="material-symbols-outlined icon-padding"
+                    onClick={currentIndex !== 0 ? handlePreviousClick : null}
+                  >
+                    arrow_back_ios
+                  </span>
+                </button>
+                <button
+                  className="sequio__navigation-btns"
+                  disabled={currentIndex === dataToUse.length - 1}
+                >
+                  <span
+                    className="material-symbols-outlined icon-padding"
+                    onClick={
+                      currentIndex !== dataToUse.length - 1
+                        ? handleNextClick
+                        : null
+                    }
+                  >
+                    arrow_forward_ios
+                  </span>
+                </button>
+                {currentIndex === dataToUse.length - 1 ? (
+                  <button
+                    className="sequio__navigation-btns__submit"
+                    onClick={handleSectionSubmit}
+                  >
+                    Submit
+                  </button>
+                ) : (
+                  <button className="sequio__navigation-btns__submit" disabled>
+                    Submit
+                  </button>
+                )}
               </div>
             </div>
           </div>
-          <div>
-            <button
-              className="sequio__navigation-btns"
-              disabled={currentIndex === 0}
-            >
-              <span
-                className="material-symbols-outlined icon-padding"
-                onClick={currentIndex !== 0 ? handlePreviousClick : null}
-              >
-                arrow_back_ios
-              </span>
-            </button>
-            <button
-              className="sequio__navigation-btns"
-              disabled={currentIndex === dataToUse.length - 1}
-            >
-              <span
-                className="material-symbols-outlined icon-padding"
-                onClick={
-                  currentIndex !== dataToUse.length - 1 ? handleNextClick : null
-                }
-              >
-                arrow_forward_ios
-              </span>
-            </button>
-            {currentIndex === dataToUse.length - 1 ? (
-              <button
-                className="sequio__navigation-btns__submit"
-                onClick={handleSectionSubmit}
-              >
-                Submit
-              </button>
-            ) : (
-              <button className="sequio__navigation-btns__submit" disabled>
-                Submit
-              </button>
-            )}
-          </div>
-        </div>
-      </div>
-      {showModal && (
-        <div className="modal">
-          <div className="modal-content">
-            <h2>Time's Up!</h2>
-            <button>Go to Dashboard</button>
-          </div>
-        </div>
+          {(showModal && (currentSectionTitle === "DILR")) && (
+            <div className="modal">
+              <div className="modal-content">
+                <h2>Time's Up!</h2>
+                <button>Go to Dashboard</button>
+              </div>
+            </div>
+          )}
+        </>
       )}
     </>
   );
