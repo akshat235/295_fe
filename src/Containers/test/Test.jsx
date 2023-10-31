@@ -132,8 +132,14 @@ function Test() {
       })
       .then((responseData) => {
         console.log(responseData);
-        setPaperToUse(papers[responseData.paper_number]);
-        console.log(paperToUse);
+        // setPaperToUse(papers[responseData.paper_number]);
+        if (responseData.paper_number === 0 || responseData.paper_number === 1 || responseData.paper_number === 2) {
+          setPaperToUse(papers[responseData.paper_number]);
+      } else {
+          responseData.paper_number = 0; 
+          setPaperToUse(papers[responseData.paper_number]);
+      }
+        console.log(paperToUse); 
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
