@@ -31,7 +31,7 @@ function Header() {
       navigate("/login");
       return;}
 
-    const send_id_url = "http://127.0.0.1:5000/dashboard/send_userid";
+    const send_id_url = "https://sequio-mvp-5ecfd4b7501f.herokuapp.com/dashboard/send_userid";
 
     const fetchData = async () => {
       try {
@@ -54,7 +54,7 @@ function Header() {
     };
     fetchData();
 
-    const apiURL = `http://127.0.0.1:5000/dashboard/test_data`;
+    const apiURL = `https://sequio-mvp-5ecfd4b7501f.herokuapp.com/dashboard/test_data`;
 
     (async () => {
       try {
@@ -74,7 +74,7 @@ function Header() {
       }
     })();
 
-    fetch("http://127.0.0.1:5000/dashboard/get_image")
+    fetch("https://sequio-mvp-5ecfd4b7501f.herokuapp.com/dashboard/get_image")
     .then((response) => {
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -93,7 +93,7 @@ function Header() {
   }, []);
 
   // useEffect(() => {
-  //   const apiURL = `http://127.0.0.1:5000/dashboard/test_data`;
+  //   const apiURL = `https://sequio-mvp-5ecfd4b7501f.herokuapp.com/dashboard/test_data`;
 
   //   (async () => {
   //     try {
@@ -128,7 +128,7 @@ function Header() {
   }, [responseJsonData]);
 
   // useEffect(() => {
-  //   fetch("http://127.0.0.1:5000/dashboard/get_image")
+  //   fetch("https://sequio-mvp-5ecfd4b7501f.herokuapp.com/dashboard/get_image")
   //     .then((response) => {
   //       if (!response.ok) {
   //         throw new Error("Network response was not ok");
