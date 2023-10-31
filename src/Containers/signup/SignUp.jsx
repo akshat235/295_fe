@@ -102,7 +102,7 @@ function SignUpPage() {
                 dob: dob              
               };
     
-          fetch("http://127.0.0.1:5000/auth/register", {
+          fetch("https://sequio-mvp-5ecfd4b7501f.herokuapp.com/auth/register", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -120,7 +120,7 @@ function SignUpPage() {
                   password: password
                 };
             
-                fetch("http://127.0.0.1:5000/auth/login", {
+                fetch("https://sequio-mvp-5ecfd4b7501f.herokuapp.com/auth/login", {
                   method: "POST",
                   headers: {
                     "Content-Type": "application/json",

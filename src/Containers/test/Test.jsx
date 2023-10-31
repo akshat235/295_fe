@@ -93,7 +93,7 @@ function Test() {
   const [sectionSubmission, setSectionSubmission] = useState({});
 
   const sendUserIdAndGetPaper = async () => {
-    const send_id_url = "http://127.0.0.1:5000/test/get_paper_number";
+    const send_id_url = "https://sequio-mvp-5ecfd4b7501f.herokuapp.com/test/get_paper_number";
 
     const fetchData = async () => {
       try {
@@ -170,7 +170,7 @@ function Test() {
   }, [currentSectionTitle, paperToUse]);
 
   //   useEffect(() => {
-  //     const apiUrl = "http://127.0.0.1:5000/test/questions";
+  //     const apiUrl = "https://sequio-mvp-5ecfd4b7501f.herokuapp.com/test/questions";
 
   //     fetch(apiUrl)
   //       .then((response) => response.json())
@@ -263,7 +263,7 @@ function Test() {
   };
 
   const handleSubmitResponse = () => {
-    const submitUrl = "http://127.0.0.1:5000/test/submitresponse";
+    const submitUrl = "https://sequio-mvp-5ecfd4b7501f.herokuapp.com/test/submitresponse";
     const uid = localStorage.getItem("userID");
     const final_response = {
       userId: uid,
