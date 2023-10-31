@@ -182,8 +182,8 @@
 /* Hover state */
 button:hover {
     background: rgba(255, 255, 255, 0.36);
-    transition: all 0.3s ease; /* Add a smooth transition effect */
-    border: 2px solid #3498db; /* Change border color on hover */
+    transition: all 0.3s ease;
+    border: 2px solid #3498db;
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);;
 }
 
