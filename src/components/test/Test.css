@@ -1,0 +1,391 @@
+/* .sequio__test {
+    padding: 0rem 1rem;
+    height: 80vh;
+} */
+
+.sequio__test {
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+.sequio__test-content {
+    display: flex;
+    justify-content: space-between;
+}
+
+.sequio__test-content-previous-btn {
+    width: 100px;
+    height: 465px;
+    text-align: center; 
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+
+.sequio__test-content-next-btn {
+    width: 100px;
+    height: 465px;
+    text-align: center; 
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    padding-left: 20px;
+}
+
+.sequio__content-textarea {
+    color: #fff;
+    background: none;
+    font-size: 20px;
+    text-align: center;
+    padding-top: 10px;
+    border-radius: 15px;
+}
+
+.sequio__test-content__container {
+    width: 1200px;
+    height: 455px;
+    border: 2px solid #F5F5F5;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.sequio__test-content__grid-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+  }
+
+.sequio__test-content-left-img {
+    width: -webkit-fill-available;
+}
+
+.timer {
+    color: white;
+    text-align: right;
+    margin-right: 6rem;
+    padding-bottom: 5px;
+}
+.sequio__border-radius-left {
+    width: 40%;
+    padding: 15px;
+    font-size: 30px;
+    color: #fff;
+    max-height: 430px; 
+    overflow: auto;
+    margin-right: 1rem;
+}
+
+.sequio__border-radius-right {
+    width: 400px;
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+    padding: 15px;
+    font-size: 30px;
+    color: #fff;
+    max-height: 430px; 
+    overflow: auto;
+}
+
+.sequio__border-radius-center {
+    width: 40%;
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+    padding: 15px;
+    font-size: 30px;
+    color: #fff;
+    max-height: 430px;
+    overflow: auto;
+    border-right: 3px solid #fff;
+}
+.sequio__test-content-p {
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 15px;
+    line-height: normal;
+    color: #ffff;
+    margin: none;
+}
+
+.sequio__test-content-p-answer {
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 15px;
+    line-height: normal;
+    color: #800000;
+    margin: none;
+    margin-top: 9rem;
+}
+
+.sequio__test-content-p-answer-right {
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 15px;
+    line-height: normal;
+    color: #0d381e;
+    margin: none;
+    margin-top: 9rem;
+}
+
+hr {
+    margin-bottom: 5px;
+}
+
+.sequio__test-content-h2{
+    font-weight: 400;
+    font-size: 15px;
+    line-height: normal;
+}
+
+.sequio__test-content h4 {
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 15px;
+    line-height: normal;
+    color: #ffff;
+    align-items: center;
+    padding-top: 10px;
+    padding-bottom: 5px;;
+}
+
+.sequio__test-content__grid-container-options h4 {
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 15px;
+    line-height: normal;
+    color: #ffff;
+    align-items: center;
+}
+
+.sequio__test-content__grid-container-options li{
+    display: flex;
+}
+
+.sequio__test-content__grid-container-options-input{
+    font-family: var(--font-family);
+    font-weight: 200;
+    font-size: 15px;
+    line-height: normal;
+    cursor: pointer;
+    border-radius: 5px;
+    color: #ffff;
+    float: left;
+    margin-right: 1rem;
+
+}
+
+.sequio__content-Question-sequence-container {
+    display: grid;
+    column-gap: 10px;
+    grid-template-columns: auto auto auto auto auto;
+    padding: 16px;
+    margin-left: 1rem;
+  }
+  
+  .sequio__content-question-sequence-rectangle {
+    width: 40px; 
+    height: 40px; 
+    background-color: white; 
+    margin: 5px;
+    border: 1px solid #041a3f;
+    border-radius: 10px;
+  }
+  
+.color-black {
+    color: black;
+    font-size: 20px;
+    text-align: center;
+    margin-top: 5px;
+    font-weight: 600;
+}
+
+.sequio__navigation-btns {
+    background-color: #3aafa9;
+    border-radius: 50%;
+    border: 1px solid #3aafa9;
+    width: 50px;
+    height: 50px;
+    font-family: var(--font-family);
+    font-weight: 300;
+    font-size: 18px;
+    text-align: center;
+    margin-top: 1rem;
+    margin-right: 1rem;
+    /* text-align: center; */
+    /* text-align: end; */
+}
+
+.icon-padding {
+    padding: 8px;
+    align-self: center;
+}
+
+.sequio__navigation-btns__submit {
+    background-color: #3aafa9;
+    border-radius: 15px;
+    border: 1px solid #3aafa9;
+    width: 300px;
+    height: 48px;
+    font-family: var(--font-family);
+    font-size: 18px;
+    line-height: normal;
+    text-align: center;
+    margin-top: 0.4rem;
+    align-self: center;
+    float: right;
+    margin-right: 14rem;
+}
+
+.modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 100;
+    padding: 5rem;
+}
+
+.modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    width: 400px;
+    height: 200px; 
+    padding: 3rem;
+}
+
+.modal-content-button {
+    background-color: #3aafa9;
+    border-radius: 15px;
+    border: 1px solid #3aafa9;
+    width: 300px;
+    height: 48px;
+    font-family: var(--font-family);
+    font-size: 18px;
+    line-height: normal;
+    text-align: center;
+    margin-top: 1rem;
+    align-self: center;
+    float: right;
+}
+
+@media screen and (max-width: 1050px) {
+    .sequio__start-test {
+        flex-direction: column;
+    }
+
+    .sequio__test-content {
+        margin: 0 0 3rem;
+    }
+}
+
+@media screen and (max-width: 650px) {
+    .sequio__test-content h3 {
+        font-size: 48px;
+        line-height: 60px;
+    }
+
+    .sequio__test-content p {
+        font-size: 16px;
+        line-height: 24px;
+    }
+}
+
+@media screen and (max-width: 490px) {
+    .sequio__test-content h3 {
+        font-size: 36px;
+        line-height: 48px;
+    }
+
+    .sequio__test-content p {
+        font-size: 14px;
+        line-height: 24px;
+    }
+}
+
+
+
+.marked-for-review {
+    background-color: yellow;
+    /* Add any other styles you want for marked questions */
+}
+
+.answer-selected{
+    background-color:#3aafa9;
+}
+
+/* Add responsive styles for smaller screens */
+@media (max-width: 768px) {
+  .sequio__test {
+    padding: 10px;
+  }
+}
+
+.timer {
+  text-align: right;
+  margin-right: 10px;
+  margin-right: 14rem;
+}
+
+/* Add responsive styles for smaller screens */
+@media (max-width: 768px) {
+  .timer {
+    margin-right: 0;
+    text-align: center;
+  }
+}
+
+.sequio__test-content-next-btn :active {
+    transform: scale(1.2); 
+}
+
+.sequio__test-content-previous-btn :active {
+    transform: scale(1.2); 
+}
+
+.sequio__navigation-btns__submit:active {
+    transform: scale(1.2); 
+}
+
+.modal-content-button:active {
+    transform: scale(0.95); 
+    transition: transform 0.1s ease;
+  }
+  
+.modal-content-button:hover {
+    transition: all 0.3s ease;
+    border: 2px solid #3498db;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+input[type="radio"] {
+    transform: scale(1.5); 
+    /* width: 20px;
+    height: 20px;
+    margin-right: 5px;
+    border: 2px solid #000;
+    border-radius: 50%; */
+}
+
+.sequio__test-content__grid-container-options-input:active {
+    box-shadow: none;
+    transition: all 0.3s ease;
+}
+
+/* .sequio__test-content__grid-container-options-input:checked {
+    border:none;
+    outline: 1px solid black;
+} */
+
+
+/* Optional styles for checked radio buttons */
+/* input[type="radio"]:checked {
+    background-color: #ff0000;
+    border-color: #ff0000;
+} */
+
+

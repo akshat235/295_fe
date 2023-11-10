@@ -1,49 +1,79 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./Navbar.css";
 import { RiMenu3Line, RiCloseLine } from "react-icons/ri";
-import "./Navbar.css";
 import { useNavigate } from "react-router-dom";
 import logo from "../../assets/cat_white.png";
-// BEM -> Block Element Modifier { style of writing the CSS naming convention }
+import AuthContext from "../Auth/AuthContext";
 
 function Navbar() {
   const [toggleMenu, setToggleMenu] = useState(false);
   const navigate = useNavigate();
+  const disableButton = localStorage.getItem("loggedInTestPage"); 
+  const { loggedIn, setLoggedIn } = useContext(AuthContext);
+  const { isTestStarted, setIsTestStarted } = useContext(AuthContext);
+
+  useEffect(() => {
+
+
+    const handleStorageChange = (e) => {
+      if (e.key === "loggedIn") {
+        setLoggedIn(e.newValue === "true");
+      }
+
+      if( e.key === "isTestStarted") {
+        setIsTestStarted(e.newValue === "true");
+      }
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    return () => {
+          window.removeEventListener("storage", handleStorageChange);
+        };
+    }, []);
+
+  const handleSignOut = (e) => {
+      setLoggedIn(false);
+      setIsTestStarted(false);
+      localStorage.clear()
+      navigate("/"); 
+  };
+
+  const handleHomeBtn = (e) => {
+    setIsTestStarted(false);
+    navigate("/starttest")
+  };
 
   const Menu = () => (
     <>
-      <p>
-        <a href="#plans">Plans</a>
+    {isTestStarted ?  <p>
+        <a href="#home" onClick={(e) => handleHomeBtn()}>
+          Home
+        </a>
       </p>
-      <p>
-        <a href="#blog">Blog</a>
-      </p>
-      <p>
-        <a href="#about">About</a>
-      </p>
-      <p>
-        <a href="#signout" onClick={() => {navigate("/");
-    localStorage.setItem("loggedIn", false)}}>
+      :null}
+
+    {loggedIn ?  <p>
+        <a href="#home" onClick={(e) => handleSignOut()}>
           Sign Out
         </a>
       </p>
+      :null}
     </>
   );
 
   const MenuToggle = () => (
     <>
-      <p>
-        <a href="#plans">Plans</a>
+      {isTestStarted ?  <p>
+        <a href="#home" onClick={(e) => handleHomeBtn()}>
+          Home
+        </a>
       </p>
-      <p>
-        <a href="#blog">Blog</a>
-      </p>
-      <p>
-        <a href="#about">About</a>
-      </p>
-      <p>
-        <a href="#signout">Sign Out</a>
-      </p>
+      :null}
+      {loggedIn ? <p>
+          <a href="#home" onClick={(e) => handleSignOut()}>
+          Sign Out
+        </a>
+      </p> : null}
     </>
   );
 
@@ -62,7 +92,7 @@ function Navbar() {
         </div>
       </div>
       <div className="sequio__navbar-sign">
-        <Menu />
+        {loggedIn ? (<Menu />): null}
       </div>
       <div className="sequio__navbar-menu">
         {toggleMenu ? (

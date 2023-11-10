@@ -1,0 +1,138 @@
+.sequio__baseline-survey-content {
+    align-items: center;
+
+    display: flex;
+    flex-direction: column;
+    margin-right: 10rem;
+    margin-left: 10rem;
+}
+
+.sequio__baseline-survey-content button {
+    background-color: transparent;
+    border-radius: 15px;
+    border: 1px solid #F5F5F5;
+    width: 500px;
+    height: 68px;
+    font-family: var(--font-family);
+    font-weight: 300;
+    font-size: 18px;
+    line-height: normal;
+    text-align: center;
+    margin-top: 1rem;
+    align-self: center;
+}
+
+.sequio__baseline-survey-content-input-p {
+    color: #fff;
+    font-family: var(--font-family);
+    font-weight: 200;
+    font-size: 24px;
+    line-height: normal;
+    margin-top: 1rem;
+    /* border-radius: 15px; */
+    /* border-bottom: 1px solid #F5F5F5; */
+    width: 400px;
+    height: 68px;
+    text-align: center;
+    padding-top: 1rem;
+}
+
+.sequio__baseline-survey-content button p {
+    font-family: var(--font-family);
+    font-weight: 200;
+    font-size: 20px;
+    line-height: normal;
+    cursor: pointer;
+    border-radius: 5px;
+    color: #ffff;
+}
+.sequio__baseline-survey-content-input{
+    margin-top: 2rem;
+    color: #fff;
+    font-family: var(--font-family);
+    font-weight: 200;
+    font-size: 26px;
+    line-height: normal;
+    background-color: transparent;
+    border: none;
+    /* border-radius: 15px; */
+    border-bottom: 1px solid #F5F5F5;
+    width: 400px;
+    height: 62px;
+    text-align: center;
+  }
+
+.sequio__baseline-survey-content-input-li{
+    margin-top: 10px;
+}
+
+.sequio__baseline-survey-content-li-input {
+    width: 20px;
+    align-self: center;
+    justify-content: center;
+}
+
+.sequio__baseline-survey-content h3 {
+    font-family: var(--font-family);
+    font-weight: 300;
+    font-size: 20px;
+    line-height: normal;
+    cursor: pointer;
+    border-radius: 5px;
+    color: #ffff;
+    align-self: center;
+}
+
+.sequio__baseline-survey-content-input::placeholder {
+    font-size: 20px;
+    font-weight: 300;
+    color: #fff;
+}
+
+@media screen and (max-width: 1050px) {
+    .sequio__baseline-survey {
+        flex-direction: column;
+    }
+
+    .sequio__baseline-survey-content {
+        margin: 0 0 3rem;
+    }
+}
+
+@media screen and (max-width: 650px) {
+    .sequio__baseline-survey-content h3 {
+        font-size: 48px;
+        line-height: 60px;
+    }
+
+    .sequio__baseline-survey-content p {
+        font-size: 16px;
+        line-height: 24px;
+    }
+}
+
+@media screen and (max-width: 490px) {
+    .sequio__baseline-survey-content h3 {
+        font-size: 36px;
+        line-height: 48px;
+    }
+
+    .sequio__baseline-survey-content p {
+        font-size: 14px;
+        line-height: 24px;
+    }
+}
+
+/* button:hover {
+  background: rgba(255, 255, 255, 0.36);
+  transition: all 0.3s ease; 
+  border: 2px solid #3498db; 
+}
+
+button:active {
+    background: rgba(255, 255, 255, 0.36);
+} */
+
+.sequio__baseline_surveyt-btns {
+    transform: scale(1.2);
+}

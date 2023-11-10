@@ -1,95 +1,95 @@
 * {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-  scroll-behavior: smooth;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    scroll-behavior: smooth;
 }
 
 body{
-  background: var(--color-bg);
+    background: var(--color-bg);
 }
 
 a {
-  color: unset;
-  text-decoration: none;
+    color: unset;
+    text-decoration: none;
 }
 
 .gradient__bg {
+  height: 100vh;
+  background:-moz-radial-gradient(325.37% 176.17% at 1.04% 100%, #32405B 0%, #092C56 17.51%, #041A3F 32.62%, #04193E 69.6%, #233452 82.1%);
 
-background:-moz-radial-gradient(325.37% 176.17% at 1.04% 100%, #32405B 0%, #092C56 17.51%, #041A3F 32.62%, #04193E 69.6%, #233452 82.1%);
+  /* safari 5.1+,chrome 10+ */
+  background:-webkit-radial-gradient(325.37% 176.17% at 1.04% 100%, #32405B 0%, #092C56 17.51%, #041A3F 32.62%, #04193E 69.6%, #233452 82.1%);
 
-/* safari 5.1+,chrome 10+ */
-background:-webkit-radial-gradient(325.37% 176.17% at 1.04% 100%, #32405B 0%, #092C56 17.51%, #041A3F 32.62%, #04193E 69.6%, #233452 82.1%);
+  /* opera 11.10+ */
+  background:-o-radial-gradient(325.37% 176.17% at 1.04% 100%, #32405B 0%, #092C56 17.51%, #041A3F 32.62%, #04193E 69.6%, #233452 82.1%);
 
-/* opera 11.10+ */
-background:-o-radial-gradient(325.37% 176.17% at 1.04% 100%, #32405B 0%, #092C56 17.51%, #041A3F 32.62%, #04193E 69.6%, #233452 82.1%);
+  /* ie 10+ */
+  background:-ms-radial-gradient(325.37% 176.17% at 1.04% 100%, #32405B 0%, #092C56 17.51%, #041A3F 32.62%, #04193E 69.6%, #233452 82.1%);
 
-/* ie 10+ */
-background:-ms-radial-gradient(325.37% 176.17% at 1.04% 100%, #32405B 0%, #092C56 17.51%, #041A3F 32.62%, #04193E 69.6%, #233452 82.1%);
-
-/* global 92%+ browsers support */
-background:radial-gradient(325.37% 176.17% at 1.04% 100%, #32405B 0%, #092C56 17.51%, #041A3F 32.62%, #04193E 69.6%, #233452 82.1%);
+  /* global 92%+ browsers support */
+  background:radial-gradient(325.37% 176.17% at 1.04% 100%, #32405B 0%, #092C56 17.51%, #041A3F 32.62%, #04193E 69.6%, #233452 82.1%);
 }
 
 .gradient__text {
-  background: var(--gradient-text);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+    background: var(--gradient-text);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .section__padding {
-  padding: 4rem 6rem;
+    padding: 0rem 6rem;
 }
 
 .section__margin {
-  margin: 4rem 6rem;
+    margin: 2rem 6rem;
 }
 
 .scale-up-center {
--webkit-animation: scale-up-center 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
-animation: scale-up-center 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+	-webkit-animation: scale-up-center 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+	animation: scale-up-center 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
 }
 
 @-webkit-keyframes scale-up-center {
-  0% {
-    -webkit-transform: scale(0.5);
-            transform: scale(0.5);
+    0% {
+      -webkit-transform: scale(0.5);
+              transform: scale(0.5);
+    }
+    100% {
+      -webkit-transform: scale(1);
+              transform: scale(1);
+    }
   }
-  100% {
-    -webkit-transform: scale(1);
-            transform: scale(1);
-  }
-}
-
-@keyframes scale-up-center {
-  0% {
-    -webkit-transform: scale(0.5);
-            transform: scale(0.5);
-  }
-  100% {
-    -webkit-transform: scale(1);
-            transform: scale(1);
-  }
-}
-
-@media screen and (max-width: 700px) {
-  .section__padding {
-    padding: 4rem;
+  
+  @keyframes scale-up-center {
+    0% {
+      -webkit-transform: scale(0.5);
+              transform: scale(0.5);
+    }
+    100% {
+      -webkit-transform: scale(1);
+              transform: scale(1);
+    }
   }
 
-  .section__margin {
-    margin: 4rem;
+  @media screen and (max-width: 700px) {
+    .section__padding {
+      padding: 4rem;
+    }
+  
+    .section__margin {
+      margin: 4rem;
+    }
   }
-}
 
-@media screen and (max-width: 550px) {
-  .section__padding {
-    padding: 4rem 2rem;
+  @media screen and (max-width: 550px) {
+    .section__padding {
+      padding: 4rem 2rem;
+    }
+  
+    .section__margin {
+      margin: 4rem 2rem;
+    }  
   }
-
-  .section__margin {
-    margin: 4rem 2rem;
-  }  
-}
-
+  

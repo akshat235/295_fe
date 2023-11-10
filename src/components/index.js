@@ -1,1 +1,10 @@
-export { default as Navbar } from './navbar/Navbar';
+export { default as Header } from './header/Header';
+export { default as SignSignup } from './landing/Landing';
+export {default as LoginPage} from './login/Login';
+export {default as SignUpPage} from './signup/SignUp';
+export {default as User} from './user/User';
+export{default as BaselineSurvey} from './baselinesurvey/BaselineSurvey';
+export{default as StartTest} from './starttest/StartTest';
+export{default as Test} from './test/Test';
+export{default as Dashboard} from './dashboard/Dashboard';
+export{default as Navbar} from './navbar/Navbar';

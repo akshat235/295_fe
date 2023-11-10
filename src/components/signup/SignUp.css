@@ -1,0 +1,204 @@
+/* Login.css */
+
+.form-group{
+  text-align: center;
+}
+ .sequio__signup-form {
+  text-align: -webkit-center;
+}
+
+.sequio__signup {
+  justify-content: center;
+}
+
+.sequio__signup-content {
+  display: flex;
+  flex-direction: column;
+  margin-right: 10rem;
+  margin-left: 10rem;
+}
+.sequio__signup-form-error-message {
+  color: white;
+  font-family: var(--font-family);
+}
+.sequio__signup-content-img {
+  flex: 1;
+  width: 200px;
+  height: 289.675px;
+  align-self: center;
+}
+
+.sequio__signup-button {
+  background-color: #5e7b7e;
+  border-radius: 15px;
+  border: 1px solid #5e7b7e;
+  width: 300px;
+  height: 58px;
+  font-family: var(--font-family);
+  font-weight: 300;
+  font-size: 18px;
+  line-height: normal;
+  text-align: center;
+  margin-top: 1rem;
+  align-self: center;
+}
+
+.sequio__signup-content-button p {
+  font-family: var(--font-family);
+  font-weight: 200;
+  font-size: 30px;
+  line-height: normal;
+  cursor: pointer;
+  border-radius: 5px;
+  color: #ffff;
+}
+
+.sequio__signup-content-h3 {
+  font-family: var(--font-family);
+  font-weight: 300;
+  font-size: 32px;
+  line-height: normal;
+  cursor: pointer;
+  border-radius: 5px;
+  color: #ffff;
+  align-self: center;
+  margin-top: 0rem;
+}
+
+.sequio__signup-form {
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+}
+.sequio__label-DOB {
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.sequio__signup-form-input {
+  margin-top: 1rem;
+  color: #fff;
+  border-radius: 5px;
+  font-family: var(--font-family);
+  font-weight: 200;
+  font-size: 26px;
+  line-height: normal;
+  background-color: transparent;
+  border-radius: 15px;
+  border: 1px solid #f5f5f5;
+  width: 300px;
+  height: 62px;
+  text-align: center;
+}
+
+.sequio__signup-form-error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 4px;
+  width: 300px;
+}
+
+.sequio__signup-form button p {
+  font-family: var(--font-family);
+  font-weight: 200;
+  font-size: 26px;
+  line-height: normal;
+  cursor: pointer;
+  border-radius: 5px;
+  color: #ffff;
+}
+
+.sequio__label-DOB-input {
+  margin-top: 0;
+  color: #fff;
+  border-radius: 5px;
+  font-family: var(--font-family);
+  font-weight: 200;
+  font-size: 24px;
+  line-height: normal;
+  background-color: transparent;
+  border-radius: 15px;
+  border: 1px solid #f5f5f5;
+  width: 300px;
+  height: 62px;
+  text-align: center;
+}
+
+.sequio__label-DOB-input-label {
+  margin-top: 1rem;
+  color: #fff;
+  border-radius: 5px;
+  font-family: var(--font-family);
+  font-weight: 200;
+  font-size: 26px;
+  line-height: normal;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #fff; /* Replace with the color you desire, e.g., red */
+  text-align: center;
+  font-size: 24px;
+}
+
+@media screen and (max-width: 1050px) {
+  .sequio__header {
+    flex-direction: column;
+  }
+
+  .sequio__signup-content {
+    margin: 0 0 3rem;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .sequio__signup-content h3 {
+    font-size: 48px;
+    line-height: 60px;
+  }
+
+  .sequio__signup-content p {
+    font-size: 16px;
+    line-height: 24px;
+  }
+}
+
+@media screen and (max-width: 490px) {
+  .sequio__signup-content h3 {
+    font-size: 36px;
+    line-height: 48px;
+  }
+
+  .sequio__signup-content p {
+    font-size: 14px;
+    line-height: 24px;
+  }
+}
+
+::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+
+.sequio__label-DOB-input:hover {
+  transition: all 0.3s ease;
+  border: 2px solid #3498db; 
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.sequio__signup-form-input:hover {
+  transition: all 0.3s ease;
+  border: 2px solid #3498db; 
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.sequio__signup-button:active {
+  transform: scale(0.95); 
+  transition: transform 0.1s ease;
+}
+
+.sequio__signup-button:hover {
+  transition: all 0.3s ease;
+  border: 2px solid #3498db;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
