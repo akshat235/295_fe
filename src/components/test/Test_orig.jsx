@@ -47,6 +47,7 @@ function Test() {
   const [loggedInUserId, setLoggedInUserID] = useState(
     localStorage.getItem("userID")
   );
+  const BASE_URL = "https://flask-app-413204.wl.r.appspot.com";
   // const VARCresponse = {
   //   VARC: paperToUse[0].map((item) => ({
   //     questionid: item.QuestionId,
@@ -94,7 +95,7 @@ function Test() {
 
   const sendUserIdAndGetPaper = async () => {
     const send_id_url =
-      "https://sequio-mvp-5ecfd4b7501f.herokuapp.com/test/get_paper_number";
+      BASE_URL+"/test/get_paper_number";
 
     const fetchData = async () => {
       try {
@@ -271,8 +272,7 @@ function Test() {
   };
 
   const handleSubmitResponse = () => {
-    const submitUrl =
-      "https://sequio-mvp-5ecfd4b7501f.herokuapp.com/test/submitresponse";
+    const submitUrl = BASE_URL + "/test/submitresponse";
     const uid = localStorage.getItem("userID");
     const final_response = {
       userId: uid,

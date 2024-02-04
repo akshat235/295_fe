@@ -18,7 +18,7 @@ function SignUpPage() {
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
   const [isFormValid, setIsFormValid] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
-
+  const BASE_URL = "https://flask-app-413204.wl.r.appspot.com";
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -122,7 +122,7 @@ function SignUpPage() {
         dob: dob,
       };
 
-      fetch("https://sequio-mvp-5ecfd4b7501f.herokuapp.com/auth/register", {
+      fetch(BASE_URL+"/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

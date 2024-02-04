@@ -25,6 +25,7 @@ function formatTime(seconds) {
 
 function Test() {
   const navigate = useNavigate();
+  const BASE_URL = "https://flask-app-413204.wl.r.appspot.com";
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
   const [correctAnswerVisible, setCorrectAnswerVisible] = useState(false);
@@ -101,8 +102,7 @@ function Test() {
   };
 
   const sendUserIdAndGetPaper = async () => {
-    const send_id_url =
-      "https://sequio-mvp-5ecfd4b7501f.herokuapp.com/test/get_paper_number";
+    const send_id_url = BASE_URL+"/test/get_paper_number";
 
     const fetchData = async () => {
       try {
@@ -331,7 +331,7 @@ function Test() {
 
   const handleSubmitResponse = () => {
     const submitUrl =
-      "https://sequio-mvp-5ecfd4b7501f.herokuapp.com/test/submitresponse";
+      BASE_URL+"/test/submitresponse";
     const uid = localStorage.getItem("userID");
     const final_response = {
       userId: uid,

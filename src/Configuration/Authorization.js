@@ -1,6 +1,7 @@
+const BASE_URL = "https://flask-app-413204.wl.r.appspot.com";
 module.exports = {
     Register:
-        "hhttp://127.0.0.1:5000/auth/register",
+        BASE_URL+"/auth/register",
     Login:
-        "http://127.0.0.1:5000/auth/login"
+    BASE_URL+"/auth/login"
 }  

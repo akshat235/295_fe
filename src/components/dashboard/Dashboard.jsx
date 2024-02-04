@@ -14,6 +14,7 @@ function Header() {
   const [wrongAnswered, setWrongAnswered] = useState(0);
   const loggedinuserid = localStorage.getItem("userID");
   const navigate = useNavigate();
+  const BASE_URL = "https://flask-app-413204.wl.r.appspot.com";
 
 
   useEffect(() => {
@@ -26,8 +27,7 @@ function Header() {
       return;
     }
 
-    const send_id_url =
-      "https://sequio-mvp-5ecfd4b7501f.herokuapp.com/dashboard/send_userid";
+    const send_id_url =   BASE_URL+ "dashboard/send_userid";
 
     const fetchData = async () => {
       try {
@@ -52,7 +52,7 @@ function Header() {
     };
     fetchData();
 
-    const apiURL = `https://sequio-mvp-5ecfd4b7501f.herokuapp.com/dashboard/test_data`;
+    const apiURL = BASE_URL+`dashboard/test_data`;
 
     (async () => {
       try {
@@ -72,7 +72,7 @@ function Header() {
       }
     })();
     let isMounted = true;
-    fetch("https://sequio-mvp-5ecfd4b7501f.herokuapp.com/dashboard/get_image")
+    fetch(BASE_URL+"/dashboard/get_image")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");

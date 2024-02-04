@@ -15,6 +15,7 @@ function LoginPage() {
   const [loggedIn] = useState('');
   const navigate = useNavigate();
   const { setLoggedIn } = useContext(AuthContext);
+  const BASE_URL = "https://flask-app-413204.wl.r.appspot.com";
   
   useEffect(() => {
     localStorage.setItem("loggedIn", false);
@@ -93,7 +94,7 @@ function LoginPage() {
       password: loginPassword,
     };
 
-    fetch("https://sequio-mvp-5ecfd4b7501f.herokuapp.com/auth/login", {
+    fetch(BASE_URL+"/auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

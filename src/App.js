@@ -1,8 +1,8 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import { Navbar, Header,  SignSignup,  LoginPage,  SignUpPage, Test, User, BaselineSurvey,  StartTest, Dashboard} from "./Components";
+import { Navbar, Header,  SignSignup,  LoginPage,  SignUpPage, Test, User, BaselineSurvey,  StartTest, Dashboard} from "./components";
 import "./App.css";
-import { AuthProvider } from "./Components/Auth/AuthContext";
+import { AuthProvider } from "./components/Auth/AuthContext";
 
 const App = () => {
   return (
