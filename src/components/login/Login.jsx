@@ -136,7 +136,7 @@ function LoginPage() {
       <div className="sequio__login section__padding" id="home">
         <div className="sequio__login-form">
           <img src={cat_white} alt="Company Logo" />
-          <h3 href="#home">SEQUIO</h3>
+          <h3 href="#home">AdapIQ</h3>
           <div id="form-auth" className="sequio__login-form">
             <form className="sequio__login-form-form">
               <div className="form-group center_text">

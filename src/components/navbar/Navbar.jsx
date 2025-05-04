@@ -86,7 +86,7 @@ function Navbar() {
         <div className="sequio__navbar-links_container">
           <p>
             <a href="#home" onClick={() => navigate("/")}>
-              SEQUIO
+            AdapIQ
             </a>
           </p>
         </div>

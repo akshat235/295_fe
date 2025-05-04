@@ -191,7 +191,7 @@ function SignUpPage() {
             alt="Company Logo"
           />
           <h3 className="sequio__signup-content-h3" href="#home">
-            SEQUIO
+          AdapIQ
           </h3>
           <div id="form-auth" className="sequio__signup-form">
             <form className="sequio__signup-form">
